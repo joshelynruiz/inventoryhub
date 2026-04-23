@@ -1,4 +1,9 @@
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+
+LIMA = timezone(timedelta(hours=-5))
+
+def now_lima():
+    return datetime.now(LIMA).replace(tzinfo=None)
 from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from database import Base
@@ -10,7 +15,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=now_lima)
 
     movements = relationship("Movement", back_populates="user")
 
@@ -26,7 +31,7 @@ class Product(Base):
     stock_min = Column(Integer, default=0)
     precio_unitario = Column(Float, nullable=False)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=now_lima)
 
     movements = relationship("Movement", back_populates="product")
 
@@ -37,10 +42,10 @@ class Movement(Base):
     id = Column(Integer, primary_key=True, index=True)
     product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    tipo = Column(String, nullable=False)  # entrada | salida | ajuste
+    tipo = Column(String, nullable=False)
     cantidad = Column(Integer, nullable=False)
     motivo = Column(String, nullable=True)
-    timestamp = Column(DateTime, default=datetime.utcnow)
+    timestamp = Column(DateTime, default=now_lima)
 
     product = relationship("Product", back_populates="movements")
     user = relationship("User", back_populates="movements")

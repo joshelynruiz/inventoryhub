@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m venv venv)",
+      "Bash(mkdir -p backend/routers)",
+      "Bash(mkdir -p frontend)",
+      "Bash(venv/Scripts/pip install *)",
+      "Bash(venv/Scripts/python *)",
+      "Bash(npm create *)",
+      "Read(//c/Users/anarc/AppData/Roaming/**)",
+      "Read(//c/Users/anarc/AppData/Local/Programs//**)",
+      "Bash(npm --version)",
+      "PowerShell(npm *)",
+      "Bash(grep -rn \"#\\\\|//\" /c/Users/anarc/Documents/inventoryhub/backend --include=\"*.py\")",
+      "Bash(grep *)"
+    ]
+  }
+}
